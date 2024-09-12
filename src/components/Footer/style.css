@@ -1,0 +1,45 @@
+footer {
+  position: relative;
+  height: 200px;
+  background-color: #4a6478;
+}
+
+footer ul {
+  position: absolute;
+  right: 10%;
+  bottom: 2%;
+  margin: 0;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+ul h2 {
+  color: wheat;
+}
+
+#instagram,
+#facebook,
+#pinterest {
+  font-size: 20px;
+  display: flex;
+  background-color: white;
+  border-radius: 50%;
+}
+
+#instagram {
+  color: rgb(253, 251, 252);
+  background-color: rgb(222, 65, 180);
+  border: 1px solid rgb(222, 65, 180);
+}
+
+#facebook {
+  color: blue;
+  background-color: white;
+  border: 1px solid blue;
+}
+#pinterest {
+  color: red;
+  border: 1px solid white;
+}

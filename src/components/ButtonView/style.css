@@ -1,0 +1,8 @@
+.buttonView {
+  width: 80px;
+  height: 30px;
+  border-radius: 10px;
+  background-color: #3b5998;
+  border: none;
+  color: wheat;
+}

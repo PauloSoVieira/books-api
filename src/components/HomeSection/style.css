@@ -1,0 +1,12 @@
+.HomeSection {
+  width: 100%;
+  background-color: rgb(150, 138, 138);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.HomeSection img {
+  scale: 90%;
+}
