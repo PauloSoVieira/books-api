@@ -1,16 +1,18 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
 import "../../pages/Login";
 import "./style.css";
+import { useAuth } from "../AuthContext/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { isLoggedIn, logout } = useAuth();
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    setIsLoggedIn(token !== null);
-  }, []);
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
+  };
 
   return (
     <nav className="navBar">
@@ -25,11 +27,9 @@ const Header = () => {
         {isLoggedIn ? (
           <>
             <li>
-              <Link to="/profile">Profile</Link>
+              <Link to="/profile"> Edit Profile</Link>
             </li>
-            <li>
-              <Link to="/logout">Logout</Link>
-            </li>
+            <li onClick={handleLogout}>Logout</li>
           </>
         ) : (
           <li>

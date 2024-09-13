@@ -5,21 +5,13 @@ import Data from "../../HEP-BOOK.postman_collection.json";
 import { useState, useEffect } from "react";
 import "./style.css";
 
-const BookCard = () => {
-  const [data, setData] = useState(null);
-
-  useEffect(() => {
-    const fetchData = () => {
-      setData(Data);
-    };
-    fetchData();
-    console.log(data);
-  }, []);
-
+const BookCard = ({ title, year, description, coverImage }) => {
   return (
     <div className="card">
-      <h3>Harry potter</h3>
-      <img src={HarryPotter1}></img>
+      <h3>{title}</h3>
+      <img src={coverImage} alt={title}></img>
+      <span>Year :{year}</span>
+      <span>{description}</span>
       <div className="divButton">
         <ButtonView></ButtonView>
         <ButtonView></ButtonView>

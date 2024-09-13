@@ -1,12 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import "./style.css";
 import { FaUser, FaLock } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../components/AuthContext/AuthContext";
 
-const LOGIN_URL = "http://5.22.217.225:8081/api/v1/auth/login";
 function Index() {
+  const { login } = useAuth();
   const [action, setAction] = useState("Sign up");
   const navigate = useNavigate();
   const [name, setName] = useState("");
@@ -14,52 +14,45 @@ function Index() {
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
 
-  /*
-  useEffect(() => {
-    const fetchData = async () => {
-      const result = await fetch(URL);
-      const data = await result.json();
-      console.log(data);
-    };
-    fetchData();
-  }, []);
- */
   const handleSubmit = async (event) => {
     event.preventDefault();
     setMessage("");
     try {
-      let url = LOGIN_URL;
-      let body = { email, password };
-
-      if (action === "Sign up") {
-        url = "http://5.22.217.225:8081/api/v1/auth/register";
-        body = { name, email, password };
-      }
+      const urlRegister = "http://5.22.217.225:8081/api/v1/auth/register";
+      const urlLogin = "http://5.22.217.225:8081/api/v1/auth/login";
+      const url = action === "Sign up" ? urlRegister : urlLogin;
+      const body =
+        action === "Sign up" ? { name, email, password } : { email, password };
 
       const response = await fetch(url, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
-
       const data = await response.json();
       console.log(data);
 
-      if (data.status && data.data && data.data.token) {
-        localStorage.setItem("token", data.data.token);
-        setMessage(
-          action === "Sign up" ? "Sign up successful!" : "Login successful!"
-        );
-        setTimeout(() => {
-          navigate("/");
-        }, 2000);
+      if (data.status) {
+        if (action === "Sign up") {
+          setMessage("Sign up successful! Please log in.");
+          setAction("Login");
+          setName("");
+          setPassword("");
+        } else {
+          if (data.data && data.data.token) {
+            login(data.data.token);
+            setMessage("Login successful!");
+            navigate("/");
+          } else {
+            setMessage("Login failed. Please check your credentials.");
+          }
+        }
       } else {
-        setMessage(data.message || "Failed");
+        setMessage(data.message || "Operation failed. Please try again.");
       }
     } catch (error) {
-      console.log(error);
+      console.error("An error occurred:", error);
+      setMessage("An error occurred. Please try again later.");
     }
   };
 
@@ -73,7 +66,7 @@ function Index() {
         {action === "Sign up" && (
           <div className="input">
             <span className="icons">
-              <FaUser></FaUser>
+              <FaUser />
             </span>
             <input
               type="text"
@@ -83,13 +76,12 @@ function Index() {
             />
           </div>
         )}
-
         <div className="input">
           <span className="icons">
             <MdEmail />
           </span>
           <input
-            type="text"
+            type="email"
             value={email}
             placeholder="Email"
             onChange={(event) => setEmail(event.target.value)}
@@ -97,7 +89,7 @@ function Index() {
         </div>
         <div className="input">
           <span className="icons">
-            <FaLock></FaLock>
+            <FaLock />
           </span>
           <input
             type="password"
@@ -106,10 +98,10 @@ function Index() {
             onChange={(event) => setPassword(event.target.value)}
           />
         </div>
-        <div className="message">{message}</div>
+        {message && <div className="message">{message}</div>}
       </div>
       <div className="forgot-password">
-        Lost Password?<span>Click Here!</span>
+        Lost Password? <span>Click Here!</span>
       </div>
       <div className="submit-container">
         <button type="submit" className="submit active">
@@ -118,7 +110,10 @@ function Index() {
         <button
           type="button"
           className="submit"
-          onClick={() => setAction(action === "Login" ? "Sign up" : "Login")}
+          onClick={() => {
+            setAction(action === "Login" ? "Sign up" : "Login");
+            setMessage("");
+          }}
         >
           {action === "Login" ? "Sign up" : "Login"}
         </button>
