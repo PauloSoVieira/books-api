@@ -5,4 +5,10 @@
   background-color: #3b5998;
   border: none;
   color: wheat;
+  cursor: pointer;
+}
+
+.buttonView:hover {
+  transform: scale(1.1);
+  transition: 0.5s ease-in-out;
 }

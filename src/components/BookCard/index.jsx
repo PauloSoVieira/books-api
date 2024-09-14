@@ -1,11 +1,9 @@
 import React from "react";
-import HarryPotter1 from "../../assets/harry_potter.jpg";
 import ButtonView from "../ButtonView/index";
-import Data from "../../HEP-BOOK.postman_collection.json";
 import { useState, useEffect } from "react";
 import "./style.css";
 
-const BookCard = ({ title, year, description, coverImage }) => {
+const BookCard = ({ title, year, description, coverImage, book }) => {
   return (
     <div className="card">
       <h3>{title}</h3>
@@ -13,8 +11,8 @@ const BookCard = ({ title, year, description, coverImage }) => {
       <span>Year :{year}</span>
       <span>{description}</span>
       <div className="divButton">
-        <ButtonView></ButtonView>
-        <ButtonView></ButtonView>
+        <ButtonView book={book}></ButtonView>
+        <ButtonView book={book}></ButtonView>
       </div>
     </div>
   );

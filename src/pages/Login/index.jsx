@@ -18,8 +18,8 @@ function Index() {
     event.preventDefault();
     setMessage("");
     try {
-      const urlRegister = "http://5.22.217.225:8081/api/v1/auth/register";
-      const urlLogin = "http://5.22.217.225:8081/api/v1/auth/login";
+      const urlRegister = "/api/auth/register";
+      const urlLogin = "/api/auth/login";
       const url = action === "Sign up" ? urlRegister : urlLogin;
       const body =
         action === "Sign up" ? { name, email, password } : { email, password };

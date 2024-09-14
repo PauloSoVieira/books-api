@@ -1,8 +1,18 @@
 import React from "react";
 import "./style.css";
+import { useModal } from "../ModalContext";
 
-const index = () => {
-  return <button className="buttonView">View</button>;
+const index = ({ book }) => {
+  const { openModal } = useModal();
+
+  const handleClick = () => {
+    openModal(book);
+  };
+  return (
+    <button onClick={handleClick} className="buttonView">
+      View
+    </button>
+  );
 };
 
 export default index;

@@ -46,6 +46,7 @@ const BookList = () => {
               year={book.year}
               description={book.description}
               coverImage={book.book_cover}
+              book={book}
             />
           ))}
         </div>
