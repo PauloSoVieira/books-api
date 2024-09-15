@@ -1,14 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "../../pages/Login";
 import "./style.css";
 import { useAuth } from "../AuthContext/AuthContext";
 import { useNavigate } from "react-router-dom";
-import "../../pages/EditProfile";
 
 const Header = () => {
-  const { isLoggedIn, logout } = useAuth();
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const [userName, setUserName] = useState("");
+
+  useEffect(() => {
+    if (user) {
+      setUserName(user.name);
+    }
+  }, [user]);
 
   const handleLogout = () => {
     logout();
@@ -25,10 +31,10 @@ const Header = () => {
           <Link to="/books">Books</Link>
         </li>
         <li>About us</li>
-        {isLoggedIn ? (
+        {user ? (
           <>
             <li>
-              <Link to="/profile"> Edit Profile</Link>
+              <Link to="/profile">{userName}'s profile</Link>
             </li>
             <li onClick={handleLogout}>Logout</li>
           </>

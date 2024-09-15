@@ -113,3 +113,8 @@
   color: rgb(251, 245, 245);
   background: #a6a1a1;
 }
+
+.message {
+  color: red;
+  margin-top: 10px;
+}
