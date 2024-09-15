@@ -6,6 +6,7 @@ import Layout from "./layouts/Layout";
 import Login from "./pages/Login";
 import AddBook from "./pages/AddBook";
 import { AuthProvider } from "./components/AuthContext/AuthContext";
+import EditProfile from "./pages/EditProfile";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
             <Route path="books" element={<Books></Books>} />
             <Route path="login" element={<Login />} />
             <Route path="add-book" element={<AddBook />} />
+            <Route path="profile" element={<EditProfile />} />
           </Route>
         </Routes>
       </BrowserRouter>

@@ -4,6 +4,7 @@ import "../../pages/Login";
 import "./style.css";
 import { useAuth } from "../AuthContext/AuthContext";
 import { useNavigate } from "react-router-dom";
+import "../../pages/EditProfile";
 
 const Header = () => {
   const { isLoggedIn, logout } = useAuth();
