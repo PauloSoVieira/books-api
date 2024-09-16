@@ -1,27 +1,27 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import BookCard from "../BookCard";
 import { useNavigate } from "react-router-dom";
 import "./style.css";
 
 const BookList = () => {
+  const [searchBook, setSearchBook] = useState("");
   const [books, setBooks] = useState([]);
   const navigate = useNavigate();
-  const url = "http://5.22.217.225:8081/api/v1/book/";
+
+  const fetchBooks = async () => {
+    try {
+      const result = await fetch("/api/book/");
+      const data = await result.json();
+      if (data.status && data.data) {
+        setBooks(data.data);
+        console.log("Fetched books:", data.data);
+      }
+    } catch (error) {
+      console.error("error fetch", error);
+    }
+  };
 
   useEffect(() => {
-    const fetchBooks = async () => {
-      try {
-        const result = await fetch(url);
-        const data = await result.json();
-        if (data.status && data.data) {
-          setBooks(data.data);
-          console.log(data);
-        }
-        // console.log(data);
-      } catch (error) {
-        console.error("error fetch", error);
-      }
-    };
     fetchBooks();
   }, []);
 
@@ -29,8 +29,39 @@ const BookList = () => {
     navigate("/add-book");
   };
 
+  const handleDeleteBook = async (id) => {
+    setBooks((prevBooks) => prevBooks.filter((book) => book.id !== id));
+  };
+
+  const handleSearchBook = (event) => {
+    setSearchBook(event.target.value);
+  };
+
+  //useMemo to filter books based on search input
+  //returns memoized array of books
+  const filteredBooks = useMemo(() => {
+    return books.filter(
+      (book) =>
+        book.title.toLowerCase().includes(searchBook.toLowerCase()) ||
+        book.id.toString().includes(searchBook)
+    );
+  }, [books, searchBook]);
+
+  console.log("Filtered books:", filteredBooks);
+
   return (
     <>
+      <nav className="search-nav">
+        <div className="search-container">
+          <input
+            type="text"
+            placeholder="Search by book name or ID..."
+            value={searchBook}
+            onChange={handleSearchBook}
+            className="search-input"
+          />
+        </div>
+      </nav>
       <div className="book-list-container">
         <div className="book-list-header">
           <h1>Book List</h1>
@@ -39,7 +70,7 @@ const BookList = () => {
           </button>
         </div>
         <div className="booklist">
-          {books.map((book) => (
+          {filteredBooks.map((book) => (
             <BookCard
               key={book.id}
               title={book.title}
@@ -47,6 +78,7 @@ const BookList = () => {
               description={book.description}
               coverImage={book.book_cover}
               book={book}
+              onDelete={handleDeleteBook}
             />
           ))}
         </div>

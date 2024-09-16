@@ -23,7 +23,6 @@ function Index() {
       const url = action === "Sign up" ? urlRegister : urlLogin;
       const body =
         action === "Sign up" ? { name, email, password } : { email, password };
-
       const response = await fetch(url, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -31,7 +30,6 @@ function Index() {
       });
       const data = await response.json();
       console.log(data);
-
       if (data.status) {
         if (action === "Sign up") {
           setMessage("Sign up successful! Please log in.");
@@ -40,7 +38,8 @@ function Index() {
           setPassword("");
         } else {
           if (data.data && data.data.token) {
-            login(data.data.token);
+            localStorage.setItem("token", data.data.token);
+            login(data.data);
             setMessage("Login successful!");
             navigate("/");
           } else {
@@ -48,7 +47,7 @@ function Index() {
           }
         }
       } else {
-        setMessage(data.message || "Operation failed. Please try again.");
+        setMessage("Error on validation!");
       }
     } catch (error) {
       console.error("An error occurred:", error);
@@ -58,7 +57,7 @@ function Index() {
 
   return (
     <form onSubmit={handleSubmit} className="container">
-      <div className="header">
+      <div className="header-login">
         <div className="text">{action}</div>
         <div className="underline"></div>
       </div>

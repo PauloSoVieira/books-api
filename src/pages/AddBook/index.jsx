@@ -43,7 +43,7 @@ const AddBook = () => {
 
     try {
       const response = await fetch("/api/book/", requestOptions);
-      const result = await response.text();
+      const result = await response.json();
       console.log(result);
 
       if (response.ok) {

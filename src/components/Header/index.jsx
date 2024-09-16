@@ -1,40 +1,69 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "../../pages/Login";
 import "./style.css";
 import { useAuth } from "../AuthContext/AuthContext";
 import { useNavigate } from "react-router-dom";
-import "../../pages/EditProfile";
 
 const Header = () => {
-  const { isLoggedIn, logout } = useAuth();
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const [userName, setUserName] = useState("");
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  useEffect(() => {
+    if (user) {
+      setUserName(user.name);
+    }
+  }, [user]);
 
   const handleLogout = () => {
     logout();
     navigate("/login");
+    setIsMenuOpen(false);
+  };
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
   };
 
   return (
     <nav className="navBar">
-      <ol>
+      <div className="hamburger" onClick={toggleMenu}>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <ol className={isMenuOpen ? "open" : ""}>
         <li>
-          <Link to="/">Home</Link>
+          <Link to="/" onClick={() => setIsMenuOpen(false)}>
+            Home
+          </Link>
         </li>
         <li>
-          <Link to="/books">Books</Link>
+          <Link to="/books" onClick={() => setIsMenuOpen(false)}>
+            Books
+          </Link>
         </li>
-        <li>About us</li>
-        {isLoggedIn ? (
+        <li>
+          <Link to="/about-us" onClick={() => setIsMenuOpen(false)}>
+            About us
+          </Link>
+        </li>
+        {user ? (
           <>
             <li>
-              <Link to="/profile"> Edit Profile</Link>
+              <Link to="/profile" onClick={() => setIsMenuOpen(false)}>
+                {userName}'s profile
+              </Link>
             </li>
             <li onClick={handleLogout}>Logout</li>
           </>
         ) : (
           <li>
-            <Link to="/login">Login</Link>
+            <Link to="/login" onClick={() => setIsMenuOpen(false)}>
+              Login
+            </Link>
           </li>
         )}
       </ol>

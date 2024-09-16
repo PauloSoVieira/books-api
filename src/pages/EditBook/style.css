@@ -1,0 +1,133 @@
+body {
+  background-color: #f0f2f5;
+}
+
+.edit-book-container {
+  display: flex;
+  max-width: 1200px;
+  margin: 2rem auto;
+  background: linear-gradient(135deg, #e6f0ff 0%, #f0f7ff 100%);
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.book-preview {
+  flex: 0 0 300px;
+  padding: 2rem;
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.7);
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.book-cover {
+  max-width: 200px;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1.5rem;
+  transition: transform 0.3s ease;
+}
+
+.book-cover:hover {
+  transform: scale(1.2);
+  transition: 1s ease-in-out;
+}
+
+.edit-form-section {
+  flex: 1;
+  padding: 2rem;
+  background-color: rgba(255, 255, 255, 0.9);
+  overflow-y: auto;
+  max-height: 80vh;
+  width: 50vh;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="url"],
+textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  background-color: #e8ecf0;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="url"]:focus,
+textarea:focus {
+  border-color: #3498db;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+}
+
+.update-book-btn {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.update-book-btn:hover {
+  background-color: #2980b9;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(52, 152, 219, 0.3);
+}
+
+.error-message,
+.success-message {
+  padding: 1rem;
+  border-radius: 6px;
+  margin-bottom: 1.5rem;
+  font-weight: 500;
+}
+
+.error-message {
+  color: #c0392b;
+  background-color: #fadbd8;
+  border: 1px solid #e74c3c;
+}
+
+.success-message {
+  color: #27ae60;
+  background-color: #d4efdf;
+  border: 1px solid #2ecc71;
+}
+
+@media (max-width: 768px) {
+  .edit-book-container {
+    flex-direction: column;
+  }
+
+  .book-preview {
+    border-right: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .edit-form-section {
+    max-height: none;
+  }
+}
