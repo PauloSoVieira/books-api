@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./style.css";
 
@@ -16,17 +16,10 @@ const AddBook = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-    // Basic form validation
-    if (!title || !year || !description || !coverImage) {
-      alert("Please fill in all fields.");
-      return;
-    }
-
     const bookData = {
       title,
       description,
-      year: parseInt(year, 10),
+      year: parseInt(year),
       book_cover: coverImage,
     };
 
@@ -38,7 +31,7 @@ const AddBook = () => {
     }
 
     const myHeaders = new Headers();
-    myHeaders.append("Authorization", `${token}`);
+    myHeaders.append("Authorization", token);
     myHeaders.append("Content-Type", "application/json");
 
     const requestOptions = {
@@ -49,21 +42,18 @@ const AddBook = () => {
     };
 
     try {
-      const response = await fetch("/api/book/", requestOptions); // This should be correct according to proxy
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Failed to add book");
-      }
-
+      const response = await fetch("/api/book/", requestOptions);
       const result = await response.json();
       console.log(result);
 
-      alert("Book added successfully!");
-      navigate("/books");
+      if (response.ok) {
+        alert("Book added successfully!");
+        navigate("/books");
+      } else {
+        alert(`Failed to add book: ${result}`);
+      }
     } catch (error) {
       console.error("Error:", error);
-      alert(`An error occurred: ${error.message}`);
     }
   };
 
@@ -90,16 +80,16 @@ const AddBook = () => {
           />
         </div>
         <div className="description">
-          <label>Description</label>
+          <label>Description </label>
           <textarea
             name="description"
             value={description}
             onChange={handleDescription}
-            placeholder="Short description of book"
+            placeholder="short description of book"
           ></textarea>
         </div>
         <div className="coverImage">
-          <label>URL of Image</label>
+          <label>Url of image</label>
           <input
             type="url"
             onChange={handleImageCover}

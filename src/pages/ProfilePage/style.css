@@ -12,12 +12,15 @@
   flex: 1;
   padding: 2rem;
   text-align: center;
-  border-right: 1px solid #e0e0e0;
+  background-color: wheat;
+  color: #5a6a7e;
 }
 
 .edit-form-section {
   flex: 2;
   padding: 2rem;
+  background-color: wheat;
+  color: #5a6a7e;
 }
 
 .profile-photo {
@@ -29,7 +32,7 @@
 }
 
 .upload-info {
-  font-size: 0.8rem;
+  font-size: 1.4rem;
   color: #666;
   margin-bottom: 0.5rem;
 }
@@ -48,15 +51,15 @@ label {
   display: block;
   margin-bottom: 0.5rem;
   font-weight: bold;
+
   color: #333;
 }
 
 input[type="text"],
 input[type="email"] {
+  background-color: #e8ecf0;
   width: 100%;
   padding: 0.75rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
   font-size: 1rem;
   transition: border-color 0.3s ease;
 }

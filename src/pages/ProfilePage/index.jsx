@@ -22,8 +22,8 @@ const Index = () => {
     }
   }, [user]);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
+  const handleChange = (event) => {
+    const { name, value } = event.target;
     setFormData((prevState) => ({
       ...prevState,
       [name]: value,
@@ -53,7 +53,7 @@ const Index = () => {
       const data = await response.json();
 
       if (data.status === true) {
-        updateUser(formData); // Update the user context
+        updateUser(formData); 
         setSuccess("Profile updated successfully!");
       } else {
         setError(data.message || "Failed to update profile");

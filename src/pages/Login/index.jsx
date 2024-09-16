@@ -47,7 +47,7 @@ function Index() {
           }
         }
       } else {
-        setMessage(data.errors);
+        setMessage("Error on validation!");
       }
     } catch (error) {
       console.error("An error occurred:", error);
@@ -57,7 +57,7 @@ function Index() {
 
   return (
     <form onSubmit={handleSubmit} className="container">
-      <div className="header">
+      <div className="header-login">
         <div className="text">{action}</div>
         <div className="underline"></div>
       </div>

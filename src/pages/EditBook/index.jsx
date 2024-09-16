@@ -7,6 +7,7 @@ const EditBook = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { user, checkTokenValidity, logout } = useAuth();
+
   const [book, setBook] = useState({
     title: "",
     year: "",
@@ -34,16 +35,18 @@ const EditBook = () => {
             Authorization: user.token,
           },
         });
-        if (response.ok) {
-          const responseData = await response.json();
-          console.log("Fetched book data:", responseData);
-          if (responseData.status && responseData.data) {
-            setBook(responseData.data);
-          } else {
-            setError("Invalid data structure received from the server");
-          }
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.message || "Failed to fetch book details");
+        }
+
+        const responseData = await response.json();
+        console.log("Fetched book data:", responseData);
+        if (responseData.status && responseData.data) {
+          setBook(responseData.data);
         } else {
-          setError("Failed to fetch book details");
+          setError("Invalid data structure received from the server");
         }
       } catch (error) {
         console.error("Error fetching book:", error);
@@ -58,8 +61,9 @@ const EditBook = () => {
     }
   }, [id, user, checkTokenValidity, logout, navigate]);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
+  //generic handleChange function for form inputs
+  const handleChange = (event) => {
+    const { name, value } = event.target;
     setBook((prevBook) => ({
       ...prevBook,
       [name]: value,
@@ -71,6 +75,15 @@ const EditBook = () => {
     setError("");
     setSuccess("");
 
+    const bookToSend = {
+      ...book,
+      //converte to decimal
+      year: parseInt(book.year, 10),
+    };
+
+    console.log("Book ID:", id);
+    console.log("Book data being sent:", bookToSend);
+
     try {
       const isValid = await checkTokenValidity();
       if (!isValid) {
@@ -80,26 +93,35 @@ const EditBook = () => {
         return;
       }
 
+      const token = localStorage.getItem("token");
+      console.log("Token being used:", token);
+
       const response = await fetch(`/api/book/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          Authorization: user.token,
+          Authorization: token,
         },
-        body: JSON.stringify(book),
+        body: JSON.stringify(bookToSend),
       });
 
+      console.log("Response status:", response.status);
+
+      const responseText = await response.text();
+      console.log("Response text:", responseText);
+
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        throw new Error(
+          `HTTP error! status: ${response.status}, message: ${responseText}`
+        );
       }
 
-      const data = await response.json();
-
-      if (data.status === true) {
+      const data = JSON.parse(responseText);
+      if (data.status === false) {
+        setError(data.message || "Failed to update book");
+      } else {
         setSuccess("Book updated successfully!");
         setTimeout(() => navigate("/books"), 2000);
-      } else {
-        setError(data.message || "Failed to update book");
       }
     } catch (error) {
       console.error("Error updating book:", error);

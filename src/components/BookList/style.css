@@ -28,5 +28,32 @@
 }
 
 .add-book-btn:hover {
-  background-color: #5a6d80; /* Um tom ligeiramente mais claro para o efeito hover */
+  background-color: #5a6d80; /
+}
+
+.search-nav {
+  position: absolute;
+  width: 300px;
+  padding: 1rem;
+}å
+
+.search-container {
+  width: 400px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.search-input {
+  width: 400px;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border: 1px solid #ced4da;
+  border-radius: 20px;
+  outline: none;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.search-input:focus {
+  border-color: #80bdff;
+  box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
 }

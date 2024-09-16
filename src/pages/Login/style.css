@@ -1,7 +1,5 @@
 :root {
   --form-color: #797979;
-
-  /* Adicione mais variáveis conforme necessário */
 }
 
 .container {
@@ -13,7 +11,7 @@
   width: 450px;
 }
 
-.header {
+.header-login {
   display: flex;
   flex-direction: column;
   justify-content: center;

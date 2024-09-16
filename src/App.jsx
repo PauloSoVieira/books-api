@@ -8,6 +8,7 @@ import AddBook from "./pages/AddBook";
 import { AuthProvider } from "./components/AuthContext/AuthContext";
 import ProfilePage from "./pages/ProfilePage";
 import EditBook from "./pages/EditBook";
+import AboutUs from "./pages/AboutUs";
 
 function NavigateWrapper({ children }) {
   const navigate = useNavigate();
@@ -25,7 +26,8 @@ function App() {
             <Route path="login" element={<Login />} />
             <Route path="add-book" element={<AddBook />} />
             <Route path="profile" element={<ProfilePage />} />
-            <Route path="/edit-book/:id" element={<EditBook />} />
+            <Route path="edit-book/:id" element={<EditBook />} />
+            <Route path="about-us" element={<AboutUs />} />
           </Route>
         </Routes>
       </NavigateWrapper>

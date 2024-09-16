@@ -22,8 +22,9 @@
 
 .divButton {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-evenly;
   margin-top: 10px;
+  width: 100%;
 }
 
 .buttonView,
@@ -33,22 +34,31 @@
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 20px;
 }
 
 .buttonView {
   background-color: #4a90e2;
   color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .buttonEdit {
   background-color: #f0ad4e;
   color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .buttonDelete {
   background-color: #d9534f;
   color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .buttonView:hover,
